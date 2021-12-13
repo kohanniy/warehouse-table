@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { styled } from '@mui/material/styles';
+import { useQuery } from 'react-query';
+
+import ThemeConfig from './theme';
+import GlobalStyles from './theme/globalStyles';
+
+import Table from './components/_table';
+
+import { getData } from './firebase';
+import { useProductsQuery } from './hooks/useProductsQuery';
+
+const RootContainer = styled('main')({
+  flexGrow: 1,
+});
 
 function App() {
+  const {status, error, data: products} = useProductsQuery();
+  // const query = useQuery('products', ({ queryKey }) => getData(queryKey[0]));
+  console.log(products);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeConfig>
+      <GlobalStyles />
+      <RootContainer>
+        {status === 'loading' && <div>Загрузка...</div>}
+        {error && <div>{error.message}</div>}
+        {products && <Table products={products} /> }
+      </RootContainer>
+    </ThemeConfig>
   );
 }
 
