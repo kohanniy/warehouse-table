@@ -12,20 +12,19 @@ import { useProductsQuery } from './hooks/useProductsQuery';
 
 const RootContainer = styled('main')({
   flexGrow: 1,
+  display: 'flex',
 });
 
 function App() {
-  const {status, error, data: products} = useProductsQuery();
-  // const query = useQuery('products', ({ queryKey }) => getData(queryKey[0]));
-  console.log(products);
 
   return (
     <ThemeConfig>
       <GlobalStyles />
       <RootContainer>
-        {status === 'loading' && <div>Загрузка...</div>}
+        <Table />
+        {/* {status === 'loading' && <div>Загрузка...</div>}
         {error && <div>{error.message}</div>}
-        {products && <Table products={products} /> }
+        {products && <Table /> } */}
       </RootContainer>
     </ThemeConfig>
   );

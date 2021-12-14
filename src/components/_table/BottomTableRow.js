@@ -27,7 +27,7 @@ const columns = [
     label: 'Орион (кг)',
   },
   {
-    id: 'logistcks',
+    id: 'logistics',
     label: 'Логистика (кг)',
   },
   {
@@ -64,6 +64,10 @@ const StyledCell = styled(TableCell)(( { theme }) => ({
   backgroundColor: theme.palette.common.black,
   color: theme.palette.common.white,
   fontSize: '14px',
+  outline: '1px solid #ffffff',
+  paddingTop: '5px',
+  paddingBottom: '5px',
+  lineHeight: 1.5,
 }));
 
 function BottomTableRow() {
