@@ -1,0 +1,95 @@
+[debug] [2021-12-14T17:27:21.571Z] ----------------------------------------------------------------------
+[debug] [2021-12-14T17:27:21.573Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2021-12-14T17:27:21.573Z] CLI Version:   9.23.1
+[debug] [2021-12-14T17:27:21.573Z] Platform:      win32
+[debug] [2021-12-14T17:27:21.573Z] Node Version:  v16.13.0
+[debug] [2021-12-14T17:27:21.574Z] Time:          Tue Dec 14 2021 22:27:21 GMT+0500 (Узбекистан, стандартное время)
+[debug] [2021-12-14T17:27:21.575Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-12-14T17:27:21.652Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-12-14T17:27:21.653Z] > authorizing via signed-in user (xoxluwa1@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\PROJECTS\table-app
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2021-12-14T17:27:27.484Z] Using project from CLI flag: table-app-18986
+[debug] [2021-12-14T17:27:27.488Z] > refreshing access token with scopes: []
+[debug] [2021-12-14T17:27:27.489Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-12-14T17:27:27.759Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Tue, 14 Dec 2021 17:27:27 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-12-14T17:27:27.956Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 [none]
+[debug] [2021-12-14T17:27:28.456Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 200
+[debug] [2021-12-14T17:27:28.456Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 {"projectId":"table-app-18986","projectNumber":"697338312279","displayName":"table-app","name":"projects/table-app-18986","resources":{"hostingSite":"table-app-18986","storageBucket":"table-app-18986.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE"}
+[info] i  Using project table-app-18986 (table-app) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2021-12-14T17:29:07.544Z] ----------------------------------------------------------------------
+[debug] [2021-12-14T17:29:07.546Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2021-12-14T17:29:07.547Z] CLI Version:   9.23.1
+[debug] [2021-12-14T17:29:07.547Z] Platform:      win32
+[debug] [2021-12-14T17:29:07.547Z] Node Version:  v16.13.0
+[debug] [2021-12-14T17:29:07.548Z] Time:          Tue Dec 14 2021 22:29:07 GMT+0500 (Узбекистан, стандартное время)
+[debug] [2021-12-14T17:29:07.548Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-12-14T17:29:07.603Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-12-14T17:29:07.603Z] > authorizing via signed-in user (xoxluwa1@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\PROJECTS\table-app
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2021-12-14T17:29:10.697Z] Using project from CLI flag: table-app-18986
+[debug] [2021-12-14T17:29:10.703Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 [none]
+[debug] [2021-12-14T17:29:11.208Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 200
+[debug] [2021-12-14T17:29:11.208Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/table-app-18986 {"projectId":"table-app-18986","projectNumber":"697338312279","displayName":"table-app","name":"projects/table-app-18986","resources":{"hostingSite":"table-app-18986","storageBucket":"table-app-18986.appspot.com","locationId":"asia-northeast3"},"state":"ACTIVE"}
+[info] i  Using project table-app-18986 (table-app) 
+[info] 
+=== Hosting Setup
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[debug] [2021-12-14T17:29:21.309Z] >>> [apiv2][query] GET https://www.gstatic.com/firebasejs/releases.json [none]
+[debug] [2021-12-14T17:29:21.569Z] <<< [apiv2][status] GET https://www.gstatic.com/firebasejs/releases.json 200
+[debug] [2021-12-14T17:29:21.570Z] <<< [apiv2][body] GET https://www.gstatic.com/firebasejs/releases.json {"current":{"version":"9.6.1","browserURL":"https://www.gstatic.com/firebasejs/9.6.1/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/9.6.1/firebase.tgz"},"live":{"version":"9.6","browserURL":"https://www.gstatic.com/firebasejs/live/9.6/firebase.js","packageURL":"https://www.gstatic.com/firebasejs/live/9.6/firebase.tgz"},"components":{"analytics":"https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js","app":"https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js","app-check":"https://www.gstatic.com/firebasejs/9.6.1/firebase-app-check.js","auth":"https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js","auth/cordova":"https://www.gstatic.com/firebasejs/9.6.1/firebase-auth/cordova.js","auth/react-native":"https://www.gstatic.com/firebasejs/9.6.1/firebase-auth/react-native.js","functions":"https://www.gstatic.com/firebasejs/9.6.1/firebase-functions.js","firestore":"https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js","firestore/lite":"https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore/lite.js","storage":"https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js","performance":"https://www.gstatic.com/firebasejs/9.6.1/firebase-performance.js","remote-config":"https://www.gstatic.com/firebasejs/9.6.1/firebase-remote-config.js","messaging":"https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js","messaging/sw":"https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging/sw.js","database":"https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js","firestore.memory":"https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.memory.js"}}
