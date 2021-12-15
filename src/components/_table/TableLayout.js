@@ -1,10 +1,9 @@
 import React from 'react';
 import { Box, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
 
 // styles
 const boxStyles = {
-  height: '100%',
+  height: '100vh',
 };
 
 const containerStyles = {

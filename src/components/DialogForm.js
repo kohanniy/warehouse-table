@@ -1,106 +1,19 @@
 import React from 'react';
-import { useMutation } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
 import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  TextField,
   DialogActions,
   Button,
   Box,
+  CircularProgress,
 } from '@mui/material';
-import Input from './Input';
-import { addProduct } from '../firebase';
 
-const inputsData = [
-  {
-    name: 'name',
-    label: 'Наименование товара',
-  },
-  {
-    name: 'package',
-    label: 'Вид упаковки',
-  },
-  {
-    name: 'quantityDoc',
-    label: 'Количество товара по документам',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'quantityActual',
-    label: 'Фактическое количество товара',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'arrivalDate',
-    label: 'Дата прихода',
-  },
-  {
-    name: 'orionBW',
-    label: 'Таможенный склад Орион',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'logistics',
-    label: 'Логистика',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'petrochemBW',
-    label: 'Таможенный склад Petrochem',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'tashkent',
-    label: 'Ташкент',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'bukhara',
-    label: 'Бухара',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-  {
-    name: 'recipient',
-    label: 'Получатель',
-  },
-  {
-    name: 'buyer',
-    label: 'Покупатель',
-  },
-  {
-    name: 'purchaseQuantity',
-    label: 'Купил',
-    pattern: {
-      value: /[1-9]/,
-      message: 'Поле принимает только числа',
-    },
-  },
-];
+import Input from './Input';
+
+import { inputsData } from '../utils/constants';
 
 const DialogStyled = styled(Dialog)(({ theme }) => ({
   '& .MuiDialog-paper': {
@@ -121,25 +34,24 @@ const DialogContentStyled = styled(DialogContent)(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-function DialogForm({ open, onClose }) {
+function DialogForm({ open, onClose, mutationFn, status }) {
   const { control, handleSubmit, formState, reset } = useForm({
     mode: 'onChange',
   });
-  const mutation = useMutation(addProduct);
-  console.log('mutation', mutation);
 
-  const onSubmit = (data) => {
-    const colData = data;
-    colData.balance =
-      data.quantityActual.replace(/\s+/g, '') - data.purchaseQuantity.replace(/\s+/g, '');
-    console.log(colData);
-    mutation.mutate(colData)
-  };
-
-
-  const handleCancelClick = () => {
+  const resetFormAndCloseDialog = () => {
     reset();
     onClose();
+  };
+
+  const onSubmit = (data) => {
+    const quantityActual = data.quantityActual.replace(/\s+/g, '');
+
+    const purchaseQuantity = data.purchaseQuantity.replace(/\s+/g, '');
+
+    data.balance = quantityActual - purchaseQuantity;
+
+    mutationFn(data, reset);
   };
 
   return (
@@ -154,13 +66,18 @@ function DialogForm({ open, onClose }) {
               label={input.label}
               control={control}
               pattern={input.pattern}
+              disabled={status === 'loading'}
             />
           ))}
         </DialogContentStyled>
         <DialogActions sx={{ p: '0 24px 16px' }}>
-          <Button onClick={handleCancelClick}>Cancel</Button>
-          <Button type='submit' variant='outlined' disabled={!formState.isValid}>
-            Subscribe
+          <Button onClick={resetFormAndCloseDialog}>Отменить</Button>
+          <Button
+            disabled={!formState.isValid || status === 'loading'}
+            type='submit'
+            variant='outlined'
+          >
+            {status === 'loading' ? <CircularProgress color='inherit' size={20} /> : 'Добавить'}
           </Button>
         </DialogActions>
       </Box>

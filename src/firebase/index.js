@@ -1,35 +1,33 @@
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
-export const getData = async (colName) => {
+import { sortProductData } from '../utils/constants';
+
+export const productsRef = collection(db, 'products');
+
+export const getProducts = async () => {
+  const q = query(productsRef, orderBy('timestamp', 'desc'));
+
+  let products = [];
+
   try {
-    let data = [];
-    const querySnapshot = await getDocs(collection(db, colName));
+    const querySnapshot = await getDocs(q);
+
     querySnapshot.forEach((doc) => {
-      const col = doc.data();
+      const product = sortProductData(doc);
 
-      const formatCol = {
-        id: doc.id,
-        name: col.name,
-        package: col.package,
-        quantityDoc: col.quantityDoc,
-        quantityActual: col.quantityActual,
-        arrivalDate: col.arrivalDate,
-        orionBW: col.orionBW,
-        logistics: col.logistics,
-        petrochemBW: col.petrochemBW,
-        tashkent: col.tashkent,
-        bukhara: col.bukhara,
-        recipient: col.recipient,
-        buyer: col.buyer,
-        purchaseQuantity: col.purchaseQuantity,
-        balance: col.balance,
-      };
-
-      data.push(formatCol);
+      products.push(product);
     });
-    
-    return data;
+
+    return products;
   } catch (err) {
     throw new Error(
       `При загрузке данных возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`
@@ -38,14 +36,31 @@ export const getData = async (colName) => {
 };
 
 export const addProduct = async (data) => {
+  data.timestamp = serverTimestamp();
   try {
-    const docRef = await addDoc(collection(db, 'products'), data);
+    const docRef = await addDoc(productsRef, data);
+
     return docRef;
   } catch (err) {
-    console.log(err);
-    // throw new Error(
-    //   `При добавлении товара возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`
-    // );
+    throw new Error(
+      `При добавлении товара возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`
+    );
   }
-  
 };
+
+// const q = query(collection(db, 'cities'), where('state', '==', 'CA'));
+// const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//   const cities = [];
+//   querySnapshot.forEach((doc) => {
+//     cities.push(doc.data().name);
+//   });
+//   console.log('Current cities in CA: ', cities.join(', '));
+// });
+
+// export const addListenerForColProducts = onSnapshot(productsRef,
+//   (snapshot) => {
+//     // ...
+//   },
+//   (error) => {
+//     // ...
+//   });

@@ -1,12 +1,11 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { useController, useForm } from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
-function Input({ control, name, label, pattern = null }) {
+function Input({ control, name, label, pattern = null, ...props }) {
   const {
     field: { onChange, value, ref },
     fieldState: { invalid, error },
-    formState: { touchedFields, dirtyFields },
   } = useController({
     name,
     control,
@@ -22,6 +21,7 @@ function Input({ control, name, label, pattern = null }) {
       inputRef={ref}
       label={label}
       helperText={error ? error.message : ''}
+      {...props}
     />
   );
 }
