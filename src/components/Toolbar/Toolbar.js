@@ -33,7 +33,7 @@ const Toolbar = ({ addButtonClick, deleteButtonClick }) => {
         <Button 
           variant='contained' 
           startIcon={<AddCircleIcon />} 
-          // onClick={addButtonClick}
+          onClick={addButtonClick}
         >
           Добавить товар
         </Button>

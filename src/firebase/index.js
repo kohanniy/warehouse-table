@@ -7,6 +7,7 @@ import {
   orderBy,
   // onSnapshot,
 } from 'firebase/firestore';
+import { generateProductData } from '../utils/utils';
 import { db } from './firebaseConfig';
 
 export const productsRef = collection(db, 'products');
@@ -19,11 +20,7 @@ export const getProducts = async () => {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      const product = {
-        id: doc.id,
-        ...doc.data(),
-      };
-
+      const product = generateProductData(doc);
       products.push(product);
     });
 

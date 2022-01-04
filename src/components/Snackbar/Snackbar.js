@@ -7,7 +7,7 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const SlideTransition = (props) => <Slide {...props} direction='down' />;
 
-function Snackbar({ open, onClose, error }) {
+const Snackbar = ({ open, onClose, error }) => {
   return (
     <MuiSnackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -17,10 +17,10 @@ function Snackbar({ open, onClose, error }) {
       TransitionComponent={SlideTransition}
     >
       <Alert onClose={onClose} severity={error ? 'error' : 'success'} sx={{ width: '100%' }}>
-        {error ? 'Что-то пошло не так. Подробности внизу страницы' : 'Все прошло успешно'}
+        {error ? error.message : 'Все прошло успешно'}
       </Alert>
     </MuiSnackbar>
   );
-}
+};
 
 export default Snackbar;

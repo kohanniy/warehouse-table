@@ -5,6 +5,7 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import reportWebVitals from './reportWebVitals';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 const queryClient = new QueryClient();
 

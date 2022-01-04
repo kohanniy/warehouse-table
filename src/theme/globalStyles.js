@@ -14,6 +14,10 @@ const GlobalStyles = () => (
         display: 'flex',
         flexDirection: 'column',
       },
+      '.scrollbar-container': {
+        display: 'flex',
+        flexDirection:'column'
+      }
     }}
   />
 );

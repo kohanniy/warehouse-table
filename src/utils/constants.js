@@ -1,5 +1,5 @@
 const numberPattern = {
-  value: /[1-9]/,
+  value: /^\d+$/,
   message: 'Поле принимает только числа',
 };
 
@@ -28,7 +28,7 @@ export const inputsData = [
   },
   {
     name: 'orionBW',
-    label: 'Таможенный склад Орион',
+    label: 'Орион - таможенный склад',
     pattern: numberPattern,
   },
   {
@@ -38,7 +38,7 @@ export const inputsData = [
   },
   {
     name: 'petrochemBW',
-    label: 'Таможенный склад Petrochem',
+    label: 'Petrochem - таможенный склад',
     pattern: numberPattern,
   },
   {
@@ -124,21 +124,3 @@ export const columns = [
     label: 'Остаток (кг)',
   },
 ];
-
-export const sortProductData = (doc) => ({
-  id: doc.id,
-  name: doc.data().name,
-  package: doc.data().package,
-  quantityDoc: doc.data().quantityDoc,
-  quantityActual: doc.data().quantityActual,
-  arrivalDate: doc.data().arrivalDate,
-  orionBW: doc.data().orionBW,
-  logistics: doc.data().logistics,
-  petrochemBW: doc.data().petrochemBW,
-  tashkent: doc.data().tashkent,
-  bukhara: doc.data().bukhara,
-  recipient: doc.data().recipient,
-  buyer: doc.data().buyer,
-  purchaseQuantity: doc.data().purchaseQuantity,
-  balance: doc.data().balance,
-});
