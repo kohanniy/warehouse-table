@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { DialogTitle, DialogActions, Button, Box, CircularProgress } from '@mui/material';
+import { DialogTitle, DialogActions, Button, Box } from '@mui/material';
 import { DialogStyled, DialogContentStyled } from './styles';
 import Input from '../Input';
 import { inputsData } from '../../utils/constants';
+import ConfirmButton from '../ConfirmButton';
 
 function DialogForm({ open, onClose, mutationFn, status }) {
   const { control, handleSubmit, formState, reset } = useForm({
@@ -43,13 +44,13 @@ function DialogForm({ open, onClose, mutationFn, status }) {
         </DialogContentStyled>
         <DialogActions sx={{ p: '0 24px 16px' }}>
           <Button onClick={resetFormAndCloseDialog}>Отменить</Button>
-          <Button
+          <ConfirmButton
             disabled={!formState.isValid || status === 'loading'}
             type='submit'
             variant='outlined'
-          >
-            {status === 'loading' ? <CircularProgress color='inherit' size={20} /> : 'Добавить'}
-          </Button>
+            loadingStatus={status}
+            btnText='Добавить'
+          />
         </DialogActions>
       </Box>
     </DialogStyled>

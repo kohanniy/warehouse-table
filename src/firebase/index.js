@@ -2,10 +2,12 @@ import {
   collection,
   getDocs,
   addDoc,
+  deleteDoc,
   serverTimestamp,
   query,
   orderBy,
-  // onSnapshot,
+  onSnapshot,
+  doc,
 } from 'firebase/firestore';
 import { generateProductData } from '../utils/utils';
 import { db } from './firebaseConfig';
@@ -45,19 +47,38 @@ export const addProduct = async (data) => {
   }
 };
 
-// const q = query(collection(db, 'cities'), where('state', '==', 'CA'));
-// const unsubscribe = onSnapshot(q, (querySnapshot) => {
-//   const cities = [];
-//   querySnapshot.forEach((doc) => {
-//     cities.push(doc.data().name);
-//   });
-//   console.log('Current cities in CA: ', cities.join(', '));
-// });
+export const deleteProduct = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'products', id));
+  } catch (err) {
+    throw new Error(
+      `При удалении данных возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`
+    );
+  }
+};
 
-// export const addListenerForColProducts = onSnapshot(productsRef,
-//   (snapshot) => {
-//     // ...
-//   },
-//   (error) => {
-//     // ...
-//   });
+export const productsListener = (modifiedFn, removedFn) =>
+  onSnapshot(
+    productsRef,
+    (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        // if (change.type === 'added') {
+        //   console.log('defaults', queryClient.setQueryDefaults('getProducts'));
+
+        //   // queryClient.invalidateQueries('getProducts');
+        //   console.log('New city: ', sortProductData(change.doc));
+        // }
+        if (change.type === 'modified') {
+          modifiedFn(change.doc);
+          console.log('Modified city: ', change.doc.data());
+        }
+        if (change.type === 'removed') {
+          removedFn(change.doc);
+          console.log('Removed city: ', change.doc.data());
+        }
+      });
+    },
+    (err) => {
+      throw new Error(`Возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`);
+    }
+  );
