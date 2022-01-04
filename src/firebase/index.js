@@ -9,20 +9,20 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
 
-import { sortProductData } from '../utils/constants';
-
 export const productsRef = collection(db, 'products');
+const q = query(productsRef, orderBy('timestamp', 'desc'));
 
 export const getProducts = async () => {
-  const q = query(productsRef, orderBy('timestamp', 'desc'));
-
   let products = [];
 
   try {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      const product = sortProductData(doc);
+      const product = {
+        id: doc.id,
+        ...doc.data(),
+      };
 
       products.push(product);
     });

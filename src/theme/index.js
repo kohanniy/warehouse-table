@@ -11,6 +11,11 @@ const theme = createTheme({
       },
     },
   },
+  palette: {
+    text: {
+      primary: '#000',
+    }
+  }
 });
 
 function ThemeConfig({ children }) {

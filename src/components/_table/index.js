@@ -5,212 +5,174 @@ import { productsRef } from '../../firebase';
 import { sortProductData } from '../../utils/constants';
 
 import {
-  Box,
+  CircularProgress,
   // Button,
-  Table,
-  TableBody,
-  TableCell,
+  Table as MuiTable,
   TableHead,
-  TableRow,
-  TableContainer,
-  Paper,
-  Checkbox,
+  Typography,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-// import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-// import AddBoxIcon from '@mui/icons-material/AddBox';
-// import DoneIcon from '@mui/icons-material/Done';
-// import ClearIcon from '@mui/icons-material/Clear';
 
-import TableLayout from './TableLayout';
 import TopHeadRow from './TopHeadRow';
 import BottomHeadRow from './BottomHeadRow';
 import DialogForm from '../DialogForm';
 import Snackbar from '../Snackbar';
-import TableToolbar from './TableToolbar';
+import Container from './Container';
+import Body from './Body';
+import { useGetProducts } from '../../hooks/productsHooks';
+// import CircularProgress from '../CircularProgress';
 
-import { useAddProduct, useGetProducts } from '../../hooks/productsHooks';
-import { useQueryClient } from 'react-query';
+const mAuto = { m: 'auto ' };
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover,
-  },
+const Table = ({ numSelected }) => {
+  const { data: products, status, error } = useGetProducts();
+  // const queryClient = useQueryClient();
 
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
+  // const { status, error, data: products } = useGetProducts();
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  fontSize: '12px',
-}));
+  // const { error: mutationError, mutate, status: mutationStatus } = useAddProduct();
 
-function AppTable() {
-  const queryClient = useQueryClient();
+  // const [dialogOpen, setDialogOpen] = useState(false);
 
-  const { status, error, data: products } = useGetProducts();
+  // const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const { error: mutationError, mutate, status: mutationStatus } = useAddProduct();
+  // const openDialog = () => setDialogOpen(true);
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // const closeDialog = () => setDialogOpen(false);
 
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  // const openSnackbar = () => setSnackbarOpen(true);
 
-  const openDialog = () => setDialogOpen(true);
+  // const closeSnackbar = () => setSnackbarOpen(false);
 
-  const closeDialog = () => setDialogOpen(false);
+  // const mutation = (data, resetFormFn) => {
+  //   mutate(data, {
+  //     onSuccess: () => {
+  //       closeDialog();
+  //       openSnackbar();
+  //       resetFormFn();
+  //     },
+  //     onError: () => {
+  //       closeDialog();
+  //       openSnackbar();
+  //       resetFormFn();
+  //     },
+  //   });
+  // };
 
-  const openSnackbar = () => setSnackbarOpen(true);
+  // useEffect(() => {
+  //   const productsListener = onSnapshot(
+  //     productsRef,
+  //     (snapshot) => {
+  //       snapshot.docChanges().forEach((change) => {
+  //         // if (change.type === 'added') {
+  //         //   console.log('defaults', queryClient.setQueryDefaults('getProducts'));
 
-  const closeSnackbar = () => setSnackbarOpen(false);
+  //         //   // queryClient.invalidateQueries('getProducts');
+  //         //   console.log('New city: ', sortProductData(change.doc));
+  //         // }
+  //         if (change.type === 'modified') {
+  //           queryClient.setQueryData('getProducts', (oldData) => [
+  //             sortProductData(change.doc),
+  //             ...oldData,
+  //           ]);
+  //           console.log('Modified city: ', change.doc.data());
+  //         }
+  //         if (change.type === 'removed') {
+  //           console.log('Removed city: ', change.doc.data());
+  //         }
+  //       });
+  //     },
+  //     (error) => {
+  //       // ...
+  //     }
+  //   );
 
-  const mutation = (data, resetFormFn) => {
-    mutate(data, {
-      onSuccess: () => {
-        closeDialog();
-        openSnackbar();
-        resetFormFn();
-      },
-      onError: () => {
-        closeDialog();
-        openSnackbar();
-        resetFormFn();
-      },
-    });
-  };
+  //   return () => productsListener();
+  // }, [queryClient]);
 
-  useEffect(() => {
-    const productsListener = onSnapshot(
-      productsRef,
-      (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          // if (change.type === 'added') {
-          //   console.log('defaults', queryClient.setQueryDefaults('getProducts'));
+  // // checkbox
+  // const [selected, setSelected] = useState([]);
+  // // const [rowsPerPage, setRowsPerPage] = useState(5);
 
-          //   // queryClient.invalidateQueries('getProducts');
-          //   console.log('New city: ', sortProductData(change.doc));
-          // }
-          if (change.type === 'modified') {
-            queryClient.setQueryData('getProducts', (oldData) => [
-              sortProductData(change.doc),
-              ...oldData,
-            ]);
-            console.log('Modified city: ', change.doc.data());
-          }
-          if (change.type === 'removed') {
-            console.log('Removed city: ', change.doc.data());
-          }
-        });
-      },
-      (error) => {
-        // ...
-      }
-    );
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = products.map((product) => product.id);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
-    return () => productsListener();
-  }, [queryClient]);
+  // const handleClick = (event, id) => {
+  //   const selectedIndex = selected.indexOf(id);
+  //   let newSelected = [];
 
-  // checkbox
-  const [selected, setSelected] = useState([]);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, id);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = products.map((product) => product.id);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  //   setSelected(newSelected);
+  // };
 
-    const handleClick = (event, id) => {
-      const selectedIndex = selected.indexOf(id);
-      let newSelected = [];
-
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, id);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1)
-        );
-      }
-
-      setSelected(newSelected);
-    };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+  // const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
-    <TableLayout>
-      <DialogForm
+    <Container>
+      <MuiTable stickyHeader>
+        <TableHead>
+          <TopHeadRow />
+          <BottomHeadRow
+            numSelected={numSelected}
+            rowCount={products ? products.length : 0}
+            // onSelectAllClick={handleSelectAllClick}
+          />
+        </TableHead>
+        {status === 'success' && products.length > 0 && <Body products={products} />}
+      </MuiTable>
+      {status === 'loading' && <CircularProgress sx={mAuto} />}
+      {status === 'error' && (
+        <Typography sx={{ ...mAuto, color: 'error.main' }}>{error.message}</Typography>
+      )}
+      {status === 'success' && products.length === 0 && (
+        <Typography sx={mAuto}>В базе данных нет товаров</Typography>
+      )}
+    </Container>
+  );
+};
+
+export default Table;
+
+{
+  /* <DialogForm
         open={dialogOpen}
         onClose={closeDialog}
         mutationFn={mutation}
         status={mutationStatus}
       />
       <Snackbar open={snackbarOpen} onClose={closeSnackbar} error={mutationError} />
-      <TableToolbar numSelected={selected.length} addButtonClick={openDialog} />
-      <TableContainer sx={{ maxHeight: '600px' }} component={Paper}>
-        <Table stickyHeader>
-          <TableHead>
-            <TopHeadRow />
-            <BottomHeadRow
-              numSelected={selected.length}
-              rowCount={products?.length}
-              onSelectAllClick={handleSelectAllClick}
-            />
-          </TableHead>
-          <TableBody>
-            {products &&
-              products.length !== 0 &&
-              products.map((product) => {
-                const isItemSelected = isSelected(product.id);
-
-                return (
-                  <StyledTableRow
-                    key={product.id}
-                    hover
-                    onClick={(event) => handleClick(event, product.id)}
-                    role='checkbox'
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    selected={isItemSelected}
-                  >
-                    <StyledTableCell padding='checkbox' sx={{ p: 0 }}>
-                      <Checkbox color='primary' checked={isItemSelected} />
-                    </StyledTableCell>
-                    {Object.keys(product).map((item) => {
-                      if (item === 'id') {
-                        return null;
-                      }
-
-                      return (
-                        <StyledTableCell align='center' key={item}>
-                          {product[item]}
-                        </StyledTableCell>
-                      );
-                    })}
-                  </StyledTableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {status === 'loading' && <Box>Загрузка...</Box>}
-      {error && status !== 'loading' && <Box>{error.message}</Box>}
-      {mutationError && <Box>{mutationError.message}</Box>}
-      {products && products.length === 0 && <Box>В базе данных нет товаров</Box>}
-    </TableLayout>
-  );
+      <TableToolbar numSelected={selected.length} addButtonClick={openDialog} /> */
 }
 
-export default AppTable;
+// {
+//   status === 'loading' && <Box>Загрузка...</Box>;
+// }
+// {
+//   error && status !== 'loading' && <Box>{error.message}</Box>;
+// }
+// {
+//   mutationError && <Box>{mutationError.message}</Box>;
+// }
+// {
+//   products && products.length === 0 && <Box>В базе данных нет товаров</Box>;
+// }
 
 // https://codesandbox.io/s/material-ui-editable-tables-wsp0c
 
