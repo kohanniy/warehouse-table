@@ -1,28 +1,51 @@
 import { TableBody } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { changeSelectedRows, selectRows } from '../../../app/slices/rowsSlice';
 import { TableRowStyled, TableCellStyled } from './styles';
 import Checkbox from '../Checkbox';
 
 const Body = ({ products }) => {
+  const { selected } = useAppSelector(selectRows);
+  const dispatch = useAppDispatch();
+
+  const isRowSelected = (id) => selected.indexOf(id) !== -1;
+
+  const handleRowClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    dispatch(changeSelectedRows(newSelected));
+  };
   return (
     <TableBody>
       {products.map((product) => {
-        // const isItemSelected = isSelected(product.id);
+        const isItemSelected = isRowSelected(product.id);
 
         return (
           <TableRowStyled
             key={product.id}
             hover
-            // onClick={(event) => handleClick(event, product.id)}
+            onClick={(event) => handleRowClick(event, product.id)}
             role='checkbox'
-            // aria-checked={isItemSelected}
+            aria-checked={isItemSelected}
             tabIndex={-1}
-            // selected={isItemSelected}
+            selected={isItemSelected}
           >
             <TableCellStyled padding='checkbox' align='center'>
-              <Checkbox
-                color='primary'
-                // checked={isItemSelected}
-              />
+              <Checkbox color='primary' checked={isItemSelected} />
             </TableCellStyled>
             <TableCellStyled align='center'>{product.name}</TableCellStyled>
             <TableCellStyled align='center'>{product.package}</TableCellStyled>

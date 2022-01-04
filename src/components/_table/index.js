@@ -23,7 +23,7 @@ import { useGetProducts } from '../../hooks/productsHooks';
 
 const mAuto = { m: 'auto ' };
 
-const Table = ({ numSelected }) => {
+const Table = ({ numSelected, isRowSelected }) => {
   const { data: products, status, error } = useGetProducts();
   // const queryClient = useQueryClient();
 
@@ -89,53 +89,16 @@ const Table = ({ numSelected }) => {
   //   return () => productsListener();
   // }, [queryClient]);
 
-  // // checkbox
-  // const [selected, setSelected] = useState([]);
-  // // const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  // const handleSelectAllClick = (event) => {
-  //   if (event.target.checked) {
-  //     const newSelecteds = products.map((product) => product.id);
-  //     setSelected(newSelecteds);
-  //     return;
-  //   }
-  //   setSelected([]);
-  // };
-
-  // const handleClick = (event, id) => {
-  //   const selectedIndex = selected.indexOf(id);
-  //   let newSelected = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, id);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelected(newSelected);
-  // };
-
-  // const isSelected = (id) => selected.indexOf(id) !== -1;
-
   return (
     <Container>
       <MuiTable stickyHeader>
         <TableHead>
           <TopHeadRow />
-          <BottomHeadRow
-            numSelected={numSelected}
-            rowCount={products ? products.length : 0}
-            // onSelectAllClick={handleSelectAllClick}
-          />
+          <BottomHeadRow />
         </TableHead>
-        {status === 'success' && products.length > 0 && <Body products={products} />}
+        {status === 'success' && products.length > 0 && (
+          <Body products={products} isRowSelected={isRowSelected} />
+        )}
       </MuiTable>
       {status === 'loading' && <CircularProgress sx={mAuto} />}
       {status === 'error' && (

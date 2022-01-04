@@ -3,13 +3,17 @@ import { Typography, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { ToolbarStyled } from './styles';
+import { useAppSelector } from '../../app/hooks';
+import { selectRows } from '../../app/slices/rowsSlice';
 
-const Toolbar = ({ numSelected, addButtonClick, deleteButtonClick }) => {
+const Toolbar = ({ addButtonClick, deleteButtonClick }) => {
+  const { selected } = useAppSelector(selectRows);
+
   return (
     <ToolbarStyled>
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <Typography color='inherit' variant='subtitle1' component='p'>
-          Выбрано товаров: {numSelected}
+          Выбрано товаров: {selected.length}
         </Typography>
       ) : (
         <Typography variant='h6' id='tableTitle' component='h2'>
@@ -17,7 +21,7 @@ const Toolbar = ({ numSelected, addButtonClick, deleteButtonClick }) => {
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <Button 
           variant='outlined' 
           startIcon={<DeleteIcon />} 
