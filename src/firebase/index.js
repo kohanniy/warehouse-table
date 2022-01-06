@@ -75,11 +75,9 @@ export const productsListener = (modifiedFn, removedFn) =>
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'modified') {
           modifiedFn(change.doc);
-          console.log('Modified city: ', change.doc.data());
         }
         if (change.type === 'removed') {
           removedFn(change.doc);
-          console.log('Removed city: ', change.doc.data());
         }
       });
     },
