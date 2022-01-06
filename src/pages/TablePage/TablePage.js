@@ -48,6 +48,7 @@ const TablePage = () => {
   const afterDeleteProductActions = () => {
     setConfirmDialogOpen(false);
     setSnackbarOpen(true);
+    dispatch(changeSelectedRows([]));
   };
 
   const mutateOptions = (resetFormFn) => ({
@@ -76,7 +77,6 @@ const TablePage = () => {
         onError: () => afterDeleteProductActions(),
       });
     });
-    dispatch(changeSelectedRows([]));
   };
 
   return (

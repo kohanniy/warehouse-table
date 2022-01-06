@@ -35,6 +35,7 @@ const Table = () => {
 
   // listener to update the database
   useEffect(() => {
+    console.log('useEffect');
     const modifiedFn = (doc) =>
       queryClient.setQueryData(
         'getProducts',
@@ -42,6 +43,7 @@ const Table = () => {
       );
 
     const removedFn = (doc) => queryClient.setQueryData('getProducts', afterDeletingProduct(doc));
+
     const listener = productsListener(modifiedFn, removedFn);
 
     return () => listener();

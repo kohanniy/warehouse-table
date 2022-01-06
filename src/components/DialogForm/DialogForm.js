@@ -24,12 +24,14 @@ const DialogForm = ({ open, onClose, mutationFn, status }) => {
     if (selected.length === 1) {
       const product = products.find((item) => item.id === selected[0]);
 
-      Object.keys(product).forEach((name) => {
-        if (name === 'id') {
-          return;
-        }
-        setValue(name, product[name], { shouldValidate: true, shouldTouch: true });
-      });
+      if (product) {
+        Object.keys(product).forEach((name) => {
+          if (name === 'id') {
+            return;
+          }
+          setValue(name, product[name], { shouldValidate: true, shouldTouch: true });
+        });
+      }
     } else {
       reset();
     }
