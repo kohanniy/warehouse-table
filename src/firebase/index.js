@@ -8,6 +8,7 @@ import {
   orderBy,
   onSnapshot,
   doc,
+  updateDoc,
 } from 'firebase/firestore';
 import { generateProductData } from '../utils/utils';
 import { db } from './firebaseConfig';
@@ -57,17 +58,21 @@ export const deleteProduct = async (id) => {
   }
 };
 
+export const updateProduct = async ({ id, data }) => {
+  try {
+    await updateDoc(doc(db, 'products', id), data);
+  } catch (err) {
+    throw new Error(
+      `При обновлении данных возникла ошибка: ${err}. Обновите страницу или обратитесь к разработчику`
+    );
+  }
+};
+
 export const productsListener = (modifiedFn, removedFn) =>
   onSnapshot(
     productsRef,
     (snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        // if (change.type === 'added') {
-        //   console.log('defaults', queryClient.setQueryDefaults('getProducts'));
-
-        //   // queryClient.invalidateQueries('getProducts');
-        //   console.log('New city: ', sortProductData(change.doc));
-        // }
         if (change.type === 'modified') {
           modifiedFn(change.doc);
           console.log('Modified city: ', change.doc.data());

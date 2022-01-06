@@ -1,68 +1,119 @@
-const numberPattern = {
-  value: /^\d+$/,
-  message: 'Поле принимает только числа',
+// ^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$
+
+const validationRules = {
+  required: 'Поле обязательно для заполнения',
+  patterns: {
+    number: {
+      value: /^\d+$/,
+      message: 'Поле принимает только числа',
+    },
+    date: {
+      value: /^(\d{2}.){2}\d{4}$/,
+      message: 'Верный формат даты: "dd.mm.yyyy"',
+    },
+  },
 };
 
 export const inputsData = [
   {
     name: 'name',
     label: 'Наименование товара',
+    rules: {
+      required: validationRules.required,
+    },
   },
   {
     name: 'package',
     label: 'Вид упаковки',
+    rules: {
+      required: validationRules.required,
+    },
   },
   {
     name: 'quantityDoc',
     label: 'Количество товара по документам',
-    pattern: numberPattern,
+    rules: {
+      required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'quantityActual',
     label: 'Фактическое количество товара',
-    pattern: numberPattern,
+    rules: {
+      required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'arrivalDate',
     label: 'Дата прихода',
+    rules: {
+      required: validationRules.required,
+      pattern: validationRules.patterns.date,
+    },
   },
   {
     name: 'orionBW',
     label: 'Орион - таможенный склад',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'logistics',
     label: 'Логистика',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'petrochemBW',
     label: 'Petrochem - таможенный склад',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'tashkent',
     label: 'Ташкент',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'bukhara',
     label: 'Бухара',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
   {
     name: 'recipient',
     label: 'Получатель',
+    rules: {
+      // required: validationRules.required,
+    },
   },
   {
     name: 'buyer',
     label: 'Покупатель',
+    rules: {
+      // required: validationRules.required,
+    },
   },
   {
     name: 'purchaseQuantity',
     label: 'Купил',
-    pattern: numberPattern,
+    rules: {
+      // required: validationRules.required,
+      pattern: validationRules.patterns.number,
+    },
   },
 ];
 

@@ -12,7 +12,7 @@ const Snackbar = ({ open, onClose, error }) => {
     <MuiSnackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={open}
-      autoHideDuration={3000}
+      autoHideDuration={5000}
       onClose={onClose}
       TransitionComponent={SlideTransition}
     >

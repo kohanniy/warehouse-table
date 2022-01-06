@@ -4,7 +4,7 @@ import GlobalStyles from './theme/globalStyles';
 import TablePage from './pages/TablePage';
 
 
-function App() {
+const App = () => {
   return (
     <ThemeConfig>
       <GlobalStyles />

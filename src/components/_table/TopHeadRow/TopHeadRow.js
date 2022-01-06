@@ -1,7 +1,7 @@
 import { TableRow } from '@mui/material';
 import { TableCellStyled } from './styles';
 
-function TopHeadRow() {
+const TopHeadRow = () => {
   return (
     <TableRow>
       <TableCellStyled colSpan={3} />
@@ -18,6 +18,6 @@ function TopHeadRow() {
       <TableCellStyled colSpan={4} />
     </TableRow>
   );
-}
+};
 
 export default TopHeadRow;

@@ -2,14 +2,14 @@ import React from 'react';
 import { TextField } from '@mui/material';
 import { useController } from 'react-hook-form';
 
-function Input({ control, name, label, pattern = null, ...props }) {
+const Input = ({ control, name, label, rules = null, ...props }) => {
   const {
     field: { onChange, value, ref },
     fieldState: { invalid, error },
   } = useController({
     name,
     control,
-    rules: { required: 'Поле обязательно для заполнения', pattern },
+    rules,
   });
 
   return (

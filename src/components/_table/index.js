@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { useQueryClient } from 'react-query';
 import { CircularProgress, Table as MuiTable, TableHead, Typography } from '@mui/material';
 import TopHeadRow from './TopHeadRow';
@@ -8,37 +8,44 @@ import Body from './Body';
 import { useGetProducts } from '../../hooks/productsHooks';
 import { generateProductData } from '../../utils/utils';
 import { productsListener } from '../../firebase';
+import { useAppSelector } from '../../app/hooks';
+import { selectRows } from '../../app/slices/rowsSlice';
 
 const mAuto = { m: 'auto ' };
 
 const Table = () => {
   const { data: products, status, error } = useGetProducts();
 
+  const { selected } = useAppSelector(selectRows);
+
   const queryClient = useQueryClient();
 
-  const updateCacheAfterAddingProduct = useCallback(
-    (doc) =>
-      queryClient.setQueryData('getProducts', (oldData) => [generateProductData(doc), ...oldData]),
-    [queryClient]
-  );
+  const afterUpdatingProduct = (doc) => (oldData) => {
+    const updatedProductIndex = oldData.findIndex((item) => item.id === doc.id);
+    oldData[updatedProductIndex] = { ...oldData[updatedProductIndex], ...doc.data() };
+    return oldData;
+  };
 
-  const updateCacheAfterDeletingProduct = useCallback(
-    (doc) => {
-      queryClient.setQueryData('getProducts', (oldData) =>
-        oldData.filter((item) => item.id !== doc.id)
-      );
-    },
-    [queryClient]
-  );
+  const afterAddingProduct = (doc) => (oldData) => [generateProductData(doc), ...oldData];
 
+  const afterDeletingProduct = (doc) => (oldData) => {
+    const newData = oldData.filter((item) => item.id !== doc.id);
+    return newData;
+  };
+
+  // listener to update the database
   useEffect(() => {
-    const listener = productsListener(
-      updateCacheAfterAddingProduct,
-      updateCacheAfterDeletingProduct
-    );
+    const modifiedFn = (doc) =>
+      queryClient.setQueryData(
+        'getProducts',
+        selected.length === 1 ? afterUpdatingProduct(doc) : afterAddingProduct(doc)
+      );
+
+    const removedFn = (doc) => queryClient.setQueryData('getProducts', afterDeletingProduct(doc));
+    const listener = productsListener(modifiedFn, removedFn);
 
     return () => listener();
-  }, [updateCacheAfterAddingProduct, updateCacheAfterDeletingProduct]);
+  }, [queryClient, selected.length]);
 
   return (
     <Container>

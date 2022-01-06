@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Main, Section, PaperStyled } from './styles';
-import { useAddProduct, useDeleteProduct } from '../../hooks/productsHooks';
+import { useAddProduct, useDeleteProduct, useUpdateProduct } from '../../hooks/productsHooks';
 import Table from '../../components/_table';
 import Toolbar from '../../components/Toolbar';
 import DialogForm from '../../components/DialogForm';
@@ -26,11 +26,20 @@ const TablePage = () => {
     status: deleteProductStatus,
   } = useDeleteProduct();
 
+  const {
+    error: updateProductError,
+    mutate: updateProductMutate,
+    status: updateProductStatus,
+  } = useUpdateProduct();
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const afterAddProductActions = (resetFormFn) => {
+  const afterAddOrUpdateProductActions = (resetFormFn) => {
+    if (selected.length === 1) {
+      dispatch(changeSelectedRows([]));
+    }
     setDialogOpen(false);
     setSnackbarOpen(true);
     resetFormFn();
@@ -41,11 +50,18 @@ const TablePage = () => {
     setSnackbarOpen(true);
   };
 
-  const addProduct = (data, resetFormFn) => {
-    addProductMutate(data, {
-      onSuccess: () => afterAddProductActions(resetFormFn),
-      onError: () => afterAddProductActions(resetFormFn),
-    });
+  const mutateOptions = (resetFormFn) => ({
+    onSuccess: () => afterAddOrUpdateProductActions(resetFormFn),
+    onError: () => afterAddOrUpdateProductActions(resetFormFn),
+  });
+
+  const addOrUpdateProduct = (data, resetFormFn) => {
+    if (selected.length === 1) {
+      const id = selected[0];
+      updateProductMutate({ id, data }, mutateOptions(resetFormFn));
+    } else {
+      addProductMutate(data, mutateOptions(resetFormFn));
+    }
   };
 
   const handleCancelBtnClick = () => {
@@ -53,9 +69,9 @@ const TablePage = () => {
     dispatch(changeSelectedRows([]));
   };
 
-  const handleConfirmBtnClick = () => {
-    selected.map((id) => {
-      return deleteProductMutate(id, {
+  const handleConfirmDeleteBtnClick = () => {
+    selected.forEach((id) => {
+      deleteProductMutate(id, {
         onSuccess: () => afterDeleteProductActions(),
         onError: () => afterDeleteProductActions(),
       });
@@ -70,9 +86,14 @@ const TablePage = () => {
           <Toolbar
             addBtnClick={() => setDialogOpen(true)}
             deleteBtnClick={() => setConfirmDialogOpen(true)}
+            editBtnClick={() => setDialogOpen(true)}
           />
-          {addProductError || deleteProductError ? (
-            <Typography>{addProductError.message || deleteProductError.message}</Typography>
+          {addProductError || deleteProductError || updateProductError ? (
+            <Typography sx={{ color: 'error.main', m: 'auto' }}>
+              {addProductError.toString() ||
+                deleteProductError.toString() ||
+                updateProductError.toString()}
+            </Typography>
           ) : (
             <Table />
           )}
@@ -80,19 +101,19 @@ const TablePage = () => {
         <DialogForm
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}
-          mutationFn={addProduct}
-          status={addProductStatus}
+          mutationFn={addOrUpdateProduct}
+          status={selected.length === 1 ? updateProductStatus : addProductStatus}
         />
         <ConfirmDialog
           open={confirmDialogOpen}
           onCancelBtnClick={handleCancelBtnClick}
-          onConfirmBtnClick={handleConfirmBtnClick}
+          onConfirmBtnClick={handleConfirmDeleteBtnClick}
           status={deleteProductStatus}
         />
         <Snackbar
           open={snackbarOpen}
           onClose={() => setSnackbarOpen(false)}
-          error={addProductError || deleteProductError}
+          error={addProductError || deleteProductError || updateProductError}
         />
       </Section>
     </Main>

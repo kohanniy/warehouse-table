@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { changeSelectedRows, selectRows } from '../../../app/slices/rowsSlice';
 import { useGetProducts } from '../../../hooks/productsHooks';
 
-function BottomHeadRow() {
+const BottomHeadRow = () => {
   const { selected } = useAppSelector(selectRows);
   const dispatch = useAppDispatch();
 
@@ -38,6 +38,6 @@ function BottomHeadRow() {
       ))}
     </TableRow>
   );
-}
+};
 
 export default BottomHeadRow;
