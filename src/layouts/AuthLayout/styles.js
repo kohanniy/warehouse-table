@@ -1,4 +1,4 @@
-import { Toolbar, Link, Box } from '@mui/material';
+import { Toolbar, Link, Box, Container } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 
 export const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
@@ -23,7 +23,8 @@ export const Main = styled(Box)({
   display: 'flex',
 });
 
-export const Section = styled(Main)({
+export const Section = styled(Container)({
+  display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',

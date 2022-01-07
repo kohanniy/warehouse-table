@@ -5,7 +5,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import LinkTab from './LinkTab';
 
-const NavTabs = () => {
+const NavTabs = (props) => {
   const location = useLocation();
 
   const [value, setValue] = useState(location.pathname);
@@ -15,8 +15,14 @@ const NavTabs = () => {
   };
 
   return (
-    <Tabs component='nav' value={value} onChange={handleChange}>
-      <LinkTab value='/login' label='Вход' to='/login' icon={<LoginIcon />} iconPosition='start' />
+    <Tabs component='nav' value={value} onChange={handleChange} {...props}>
+      <LinkTab
+        value='/login'
+        label='Вход'
+        to='/login'
+        icon={<LoginIcon />}
+        iconPosition='start'
+      />
       <LinkTab
         value='/register'
         label='Регистрация'
