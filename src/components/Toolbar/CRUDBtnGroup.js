@@ -1,21 +1,20 @@
-import { Button, Stack, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Button, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { useAppSelector } from '../../app/hooks';
+import useAppMediaQuery from '../../hooks/useAppMediaQuery';
 import { selectRows } from '../../app/slices/rowsSlice';
 
 const CRUDBtnGroup = ({ addBtnClick, editBtnClick, deleteBtnClick }) => {
   const { selected } = useAppSelector(selectRows);
 
-  const theme = useTheme();
-  const upSm = useMediaQuery(theme.breakpoints.up('sm'));
+  const { smUp } = useAppMediaQuery();
 
   return (
     <>
       {selected.length > 0 ? (
-        <Stack direction={upSm ? 'row' : 'column'} spacing={2}>
+        <Stack direction={smUp ? 'row' : 'column'} spacing={2}>
           <Button variant='outlined' startIcon={<DeleteIcon />} onClick={deleteBtnClick}>
             Удалить
           </Button>
