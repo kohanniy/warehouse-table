@@ -10,12 +10,26 @@ const theme = createTheme({
         },
       },
     },
+    MuiTabs: {
+      styleOverrides: {
+        indicator: {
+          display: 'none',
+        },
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
   },
   palette: {
     text: {
       primary: '#000',
-    }
-  }
+    },
+  },
 });
 
 function ThemeConfig({ children }) {
