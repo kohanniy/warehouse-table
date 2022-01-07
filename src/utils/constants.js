@@ -1,4 +1,23 @@
+import * as yup from 'yup';
 // ^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$
+
+export const authFormSchema = yup.object().shape({
+  login: yup
+    .string()
+    .required('Поле обязательно для заполнения'),
+  email: yup
+    .string()
+    .required('Поле обязательно для заполнения')
+    .email('Неверный формат электронной почты'),
+  password: yup
+    .string()
+    .required('Поле обязательно для заполнения')
+    .min(8, `Пароль должен быть не меньше 8 символов`),
+  confirmPassword: yup
+    .string()
+    .required('Поле обязательно для заполнения')
+    .oneOf([yup.ref('password')], 'Пароли не совпадают'),
+});
 
 const validationRules = {
   required: 'Поле обязательно для заполнения',
@@ -173,5 +192,28 @@ export const columns = [
   {
     id: 'balance',
     label: 'Остаток (кг)',
+  },
+];
+
+export const registerInputs = [
+  {
+    name: 'login',
+    type: 'text',
+    label: 'Логин',
+  },
+  {
+    name: 'email',
+    type: 'email',
+    label: 'Email',
+  },
+  {
+    name: 'password',
+    type: 'password',
+    label: 'Пароль',
+  },
+  {
+    name: 'confirmPassword',
+    type: 'password',
+    label: 'Подтверждение пароля',
   },
 ];

@@ -17,7 +17,7 @@ const AuthLayout = ({ children }) => {
 
   return (
     <>
-      <AppBar position='static' color='inherit'>
+      <AppBar position='static' color='inherit' sx={{ mb: 2 }}>
         <ToolbarStyled>
           <LinkStyled underline='none' component={RouterLink} to='/'>
             Складская таблица
